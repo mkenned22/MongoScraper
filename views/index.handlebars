@@ -5,21 +5,7 @@
 </h1>
 <a href="/scrape"><button>Scrape</button></a>
 {{#with articles}}
-    <h1>Results:</h1>
-    {{#each this}}
-        <div class="panel panel-primary">
-            <form action="/scrape" method="post">
-                <div class="panel-body">
-                <h4 id="title{{article_num}}">{{title}}</h4>
-            </div>
-            <div class="panel-footer" id="desc{{article_num}}">
-                {{desc}}
-            </div>
-                <button type="submit" formmethod="post" id={{article_num}} class="saveButton">Save Article</button>
-            </form>
-            
-        </div>
-    {{/each}}
+    {{> scraper}}
 {{/with}}
 
 

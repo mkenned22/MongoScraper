@@ -51,3 +51,21 @@
       }
     );
   });
+
+  $(".deleteButton").on("click", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    console.log(this.id)
+
+    var formData = {
+      id: this.id,
+    }
+    console.log(formData);
+  
+    // Send the POST request.
+    $.post("/deleteArticle", formData, function(data) {
+        console.log(data);
+      }
+    );
+  });

@@ -123,13 +123,14 @@ router.get("/scrape", function (req, res){
         var promises = [];
         var array = [];
         $("article.article").each(function(i, element) {
+            j = i+1
             var title = $(element).find('div > header > h2').text().trim()
             if(title !== ""){
                 var desc = $(element).find('div > div > p').text().trim()
                 // console.log(title)
                 // console.log(desc)
                 var promise = array.push({
-                    "article_num":i,
+                    "article_num":j,
                     "title": title,
                     "desc": desc
                 });
@@ -171,61 +172,27 @@ router.post("/scrape", function (req, res){
         "desc": desc
     })
     article.save()
+});
 
+router.get("/saved", function (req, res){
+    
+    Article.find({}, function(err, articles) {
+        var successObject = {
+            "articles": articles
+        };
+        //console.log(successObject);
+        res.render("index",successObject)
+    })
+});
 
-    // // First, tell the console what server.js is doing
-    // console.log("\n***********************************\n" +
-    //             "Grabbing new articles\n" +
-    //             "***********************************\n");
+router.post("/deleteArticle", function (req, res){
+    
+    var id = req.body.id;
 
-    // // Making a request for reddit's "webdev" board. The page's HTML is passed as the callback's third argument
-    // request("http://www.foxnews.com/us.html", function(error, response, html) {
-
-    //     // Load the HTML into cheerio and save it to a variable
-    //     // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-    //     var $ = cheerio.load(html);
-
-    //     // With cheerio, find each p-tag with the "title" class
-    //     // (i: iterator. element: the current element)
-    //     var promises = [];
-    //     var array = [];
-    //     $("article.article").each(function(i, element) {
-    //         var title = $(element).find('div > header > h2').text().trim()
-    //         if(title !== ""){
-    //             var desc = $(element).find('div > div > p').text().trim()
-    //             // console.log(title)
-    //             // console.log(desc)
-    //             var promise = array.push({
-    //                 "article_num":i,
-    //                 "title": title,
-    //                 "desc": desc
-    //             });
-    //             // var article = new Article({
-    //             //     "title": title,
-    //             //     "desc": desc
-    //             // });
-    //             //var promise = article.save();
-    //             promises.push(promise)
-    //         }
-    //     });
-    //     Promise.all(promises)
-    //         .then(function(){
-    //             console.log(promises);
-    //             //Article.find({}, function(err, articles) {
-    //                 var successObject = {
-    //                     "articles": array
-    //                 };
-    //                 //console.log(successObject);
-    //                 res.render("index",successObject)
-    //             //});
-                
-    //         })
-    //         .catch(function(err){
-    //             console.log(err);
-    //         })
-            
-    // }); // end request
-    //res.responseCode("200")
+    Article.deleteOne({_id:id}, function (err) {
+        if (err) return handleError(err);
+        // deleted at most one tank document
+    });
 });
 
 module.exports = router;
