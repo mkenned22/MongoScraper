@@ -1,34 +1,25 @@
-// controller.js defines all of the routes for the application
-
-// require express, and the two models "soladmin" and "database"
 var express = require("express");
 var mongoose = require("mongoose");
 
-//var orm = require("../config/orm.js");
-
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 var Schema = mongoose.Schema;
-
 // Using the Schema constructor, create a new NoteSchema object
 // This is similar to a Sequelize model
 var ArticleSchema = new Schema({
   // `title` must be of type String
   title: String,
   // `body` must be of type String
-  desc: String
+  desc: String,
+  notes: Array
 });
 
 // This creates our model from the above schema, using mongoose's model method
 var Article = mongoose.model("Article", ArticleSchema);
-
-// Export the Note model
-//module.exports = Article;
 
 // define the router
 var router = express.Router();
@@ -169,7 +160,8 @@ router.post("/scrape", function (req, res){
 
     var article = new Article({
         "title": title,
-        "desc": desc
+        "desc": desc,
+        "notes":[]
     })
     article.save()
 });
@@ -193,6 +185,19 @@ router.post("/deleteArticle", function (req, res){
         if (err) return handleError(err);
         // deleted at most one tank document
     });
+});
+
+router.post("/addNote", function (req, res){
+    
+    var id = req.body.id;
+    var note = req.body.note;
+
+    console.log(note)
+
+    Article.findByIdAndUpdate(
+        {"_id":id},
+        { $push: { notes: {note} }}
+    )
 });
 
 module.exports = router;

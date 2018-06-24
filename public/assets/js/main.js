@@ -1,25 +1,3 @@
-// upon clicking the submit button, send the post request
-// $("#submitButton").on("click", function(event) {
-
-//     // Make sure to preventDefault on a submit event.
-//     event.preventDefault();
-
-//     // pull all necessary information from the form
-//     var formData = {
-//         msgVpn: $("#msgVpn").val().trim(),
-//         username: $("#username"),
-//         password: $("#password"),
-//         app: $("#app"),
-//         desc: $("#desc")
-//     };
-
-//     // Send the POST request.
-//     $.post("/", formData, function(data) {
-//         console.log(data);
-//       }
-//     );
-//   });
-
   $("#scrapeButton").on("click", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
@@ -65,6 +43,26 @@
   
     // Send the POST request.
     $.post("/deleteArticle", formData, function(data) {
+        console.log(data);
+      }
+    );
+  });
+
+  $(".addNoteButton").on("click", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    console.log(this.id)
+    var note = $("#noteTextarea").text().trim();
+
+    var formData = {
+      id: this.id,
+      note: note
+    }
+    console.log(formData);
+  
+    // Send the POST request.
+    $.post("/addNote", formData, function(data) {
         console.log(data);
       }
     );
