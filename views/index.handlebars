@@ -1,0 +1,21 @@
+{{!-- High level page layout --}}
+{{> navbar}}
+<h1>
+    Click the Scrape button to see the latest news articls from Fox News!
+</h1>
+<a href="/scrape"><button>Scrape</button></a>
+{{#with articles}}
+    <h1>Results:</h1>
+    {{#each this}}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>{{title}} <button>Save Article</button></h4>
+            </div>
+            <div class="panel-footer">
+                {{desc}}
+            </div>
+        </div>
+    {{/each}}
+{{/with}}
+
+

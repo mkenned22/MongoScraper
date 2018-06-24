@@ -1,10 +1,11 @@
 {
   "name": "MongoScraper",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "# Description: This repo is dual purposed: 1. This is meant to wholistically showcase a POC using Solace and a Raspberry Pi to control IoT devices within your home network. 2. This is meant to provide a self-service UI for you to configure a solace cloud VPN with little to no message routing experience (specifically for a single IoT instance)",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,6 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.1.6",
-    "npm": "^6.1.0",
     "request": "^2.87.0"
   }
 }
