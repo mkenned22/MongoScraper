@@ -30,3 +30,24 @@
       }
     );
   });
+
+  $(".saveButton").on("click", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    console.log(this.id)
+    var title = $("#title"+this.id).text().trim();
+    var desc = $("#desc"+this.id).text().trim();
+
+    var formData = {
+      title: title,
+      desc: desc
+    }
+    console.log(formData);
+  
+    // Send the POST request.
+    $.post("/scrape", formData, function(data) {
+        console.log(data);
+      }
+    );
+  });
